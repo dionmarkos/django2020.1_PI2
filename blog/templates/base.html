@@ -11,7 +11,10 @@
   <body>
 
     <div class="page-header">
-        <h1><a href="/">Django Girls Blog</a></h1>
+      {% if user.is_authenticated %}
+        <a href="{% url 'post_novo' %}" class="top-menu" id="texto_nova_publicacao"><span class="glyphicon glyphicon-plus"></span> Nova publicação</a>
+      {% endif %}
+      <h1><a href="/">Meu site em Django</a></h1>
     </div>
     <div class="content container">
         <div class="row">
