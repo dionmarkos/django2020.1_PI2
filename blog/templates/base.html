@@ -12,18 +12,23 @@
 
     <div class="page-header">
       {% if user.is_authenticated %}
-        <a href="{% url 'post_novo' %}" class="top-menu" id="texto_nova_publicacao"><span class="glyphicon glyphicon-plus"></span> Nova publicação</a>
+        <p class="top-menu texto_spans" style="margin-bottom: 0;"><a href="{% url 'logout' %}">Sair</a></p>
+        <a href="{% url 'post_novo' %}" class="top-menu texto_spans"><span class="glyphicon glyphicon-plus"></span> Nova publicação</a>
+        <a href="{% url 'post_lista_rascunhos' %}" class="top-menu texto_spans"><span class="glyphicon glyphicon-edit"></span> Rascunhos</a>
+        <p class="top-menu texto_spans p-0" style="margin-bottom: 0;">Olá {{ user.username }}</p>
+      {% else %}
+        <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span> Login</a>
       {% endif %}
       <h1><a href="/">Meu site em Django</a></h1>
     </div>
+
     <div class="content container">
-        <div class="row">
-            <div class="col-md-8">
-            {% block content %}
-            {% endblock %}
-            </div>
+      <div class="row">
+        <div class="col-md-8">
+          {% block content %}
+          {% endblock %}
         </div>
+      </div>
     </div>
-    
-</body>
+  </body>
 </html>

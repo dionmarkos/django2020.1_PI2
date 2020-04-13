@@ -2,17 +2,47 @@
 
 {% block content %}
     <div class="post">
-        {% if post.data_publicacao %}
-            <div class="date">
-                {{ post.data_publicacao }}
-            </div>
-        {% endif %}
-        
+
         <h2>{{ post.titulo }}
           {% if user.is_authenticated %}
+
             <a class="btn btn-default" href="{% url 'post_editar' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
+            {% if not post.data_publicacao %}
+              <a class="btn btn-default" href="{% url 'post_publicar' pk=post.pk %}">Publicar</a>
+            {% endif %}
+            <a class="btn btn-default" href="{% url 'post_remover' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span> Apagar</a>
+
           {% endif %}
         </h2>
+
+        {% if post.data_publicacao %}
+          <div class="date">
+            Publicado em {{ post.data_publicacao }}
+          </div>
+        {% endif %}
+
         <p>{{ post.texto|linebreaksbr }}</p>
     </div>
+
+    <hr>
+      <a class="btn btn-default" href="{% url 'add_comentario_post' pk=post.pk %}">Comentar</a>
+      {% for comentario in post.comentarios.all %}
+        {% if user.is_authenticated or comentario.comentario_aprovado %}
+          <div class="comentario">
+            <div class="date">
+              {{ comentario.data_criacao }}
+                {% if not comentario.comentario_aprovado %}
+                  <a class="btn btn-default" href="{% url 'comentario_remover' pk=comentario.pk %}"><span class="glyphicon glyphicon-remove"></span> Remover</a>
+                  <a class="btn btn-default" href="{% url 'comentario_aprovar' pk=comentario.pk %}"><span class="glyphicon glyphicon-ok"></span> Aprovar</a>
+                {% endif %}
+            </div>
+            <strong>{{ comentario.autor }}</strong>
+            <p>{{ comentario.texto|linebreaks }}</p>
+          </div>
+        {% endif %}
+      {% empty %}
+        <p>Nenhum comentaŕio no momento.</p>
+      {% endfor %}
+    </hr>
+
 {% endblock %}

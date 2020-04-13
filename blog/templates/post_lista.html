@@ -5,9 +5,10 @@
     <div class="post">
       <h2><a href="{% url 'post_detalhes' pk=post.pk %}">{{ post.titulo }}</a></h2>
       <div class="date">
-        <p>Data de Publicação: {{ post.data_publicacao }}</p>
+        <p>Publicado em {{ post.data_publicacao }}</p>
       </div>
       <p>{{ post.texto|linebreaksbr }}</p>
+      <a href="{% url 'post_detalhes' pk=post.pk %}">Comentários: {{ post.comentarios_aprovados.count }}</a>
     </div>
   {% endfor %}
 {% endblock %}
